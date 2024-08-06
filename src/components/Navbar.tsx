@@ -1,21 +1,20 @@
 "use client";
-
-import { navbarLinks } from "@/lib/constants";
-import {
-  useSession,
-  SignedOut,
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  UserButton,
-} from "@clerk/nextjs";
-import { usePathname } from "next/navigation";
-import { useState, useRef, useEffect } from "react";
-import { Button } from "react-day-picker";
-import Logo from "./logo";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ModeToggle } from "@/components/mode-toggle";
+import { navbarLinks } from "@/lib/constant";
+import { usePathname } from "next/navigation";
+import {
+  SignedOut,
+  SignInButton,
+  SignedIn,
+  UserButton,
+  useSession,
+  SignUpButton,
+} from "@clerk/nextjs";
+import Logo from "@/components/Logo";
+import { ModeToggle } from "@/components/ModeToggle";
+import { Button } from "@/components/ui/button";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -121,7 +120,7 @@ const Navbar: React.FC = () => {
               <ModeToggle />
               <div className="flex items-center gap-x-4">
                 <SignedOut>
-                  <Button>
+                  <Button >
                     <SignInButton />
                   </Button>
                   <Button>
@@ -178,28 +177,28 @@ const Navbar: React.FC = () => {
             </div>
 
             <div className="mt-4 space-y-4">
-              {navbarLinks.map((item) => {
-                const isActive =
-                  pathname === item.link ||
-                  pathname.startsWith(`${item.link}/`);
-                return (
-                  <Link
-                    key={item.label}
-                    href={item.link}
-                    passHref
-                    className={`block px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out ${
-                      isActive
-                        ? "bg-blue-500 text-white"
-                        : "text-black dark:text-white hover:bg-blue-100 hover:text-blue-500"
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
+                {navbarLinks.map((item) => {
+                  const isActive =
+                    pathname === item.link ||
+                    pathname.startsWith(`${item.link}/`);
+                  return (
+                    <Link
+                      key={item.label}
+                      href={item.link}
+                      passHref
+                      className={`block px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out ${
+                        isActive
+                          ? "bg-blue-500 text-white"
+                          : "text-black dark:text-white hover:bg-blue-100 hover:text-blue-500"
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
               <div className="flex items-center gap-x-4">
                 <SignedOut>
-                  <Button>
+                  <Button >
                     <SignInButton />
                   </Button>
                   <Button>
@@ -214,8 +213,7 @@ const Navbar: React.FC = () => {
           </div>
         </div>
       </nav>
-    </>
-  );
-};
-
+</> 
+)}
+                   
 export default Navbar;

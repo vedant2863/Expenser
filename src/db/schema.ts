@@ -1,62 +1,56 @@
-import { integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod"
-import { relations } from "drizzle-orm"
-import { z } from "zod"
-
-export const accounts = pgTable("accounts", {
-    id: text("id").primaryKey(),
-    plaidId: text("plaid_id"),
-    name: text("name").notNull(),
-    userId: text("user_id").notNull(),
-})
-
-export const accountsRelations = relations(accounts, ({ many }) => ({
-    transactions: many(transactions)
-}))
-
-export const insertAccountSchema = createInsertSchema(accounts)
-
-
-
-export const categories = pgTable("categories", {
-    id: text("id").primaryKey(),
-    plaidId: text("plaid_id"),
-    name: text("name").notNull(),
-    userId: text("user_id").notNull(),
-})
-
-export const categoriesRelations = relations(categories, ({ many }) => ({
-    transactions: many(transactions)
-}))
-
-export const insertCategorySchema = createInsertSchema(categories)
-
-
-export const transactions = pgTable("transactions", {
-    id: text("id"),
+import {
+    pgTable,
+    timestamp,
+    text,
+    pgEnum,
+    integer,
+    varchar,
+    boolean,
+  } from "drizzle-orm/pg-core";
+  
+  // Schema
+  export const subscriptionEnum = pgEnum("subscription", [
+    "unSubscribed",
+    "subscribed",
+  ]);
+  export const users = pgTable("users", {
+    id: integer("id").primaryKey(),
+    userId: text("userId").unique().notNull(),
+    subscription: subscriptionEnum("subscription").default("unSubscribed"),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at")
+      .notNull()
+      .$onUpdate(() => new Date()),
+  });
+  
+  export const accounts = pgTable("accounts", {
+    id: integer("id").primaryKey().references(() => users.id),
+    accountId: text("accountId").unique().notNull(),
+    type: text("type").notNull(),
+    connected: boolean("connected").default(true),
+  });
+  
+  export const transactionTypeEnum = pgEnum("transaction_type", [
+    "income",
+    "expense",
+  ]);
+  export const transactions = pgTable("transactions", {
+    id: integer("id").primaryKey().references(() => users.id),
     amount: integer("amount").notNull(),
-    payee: text("payee").notNull(),
-    notes: text("notes"),
-    date: timestamp("date", { mode: "date" }).notNull(),
-    accountId: text("account_id").references(() => accounts.id, {
-        onDelete: "cascade",
-    }).notNull(),
-    categoryId: text("category_id").references(() => categories.id, {
-        onDelete: "set null"
-    })
-})
-
-export const transactionsRelations = relations(transactions, ({ one }) => ({
-    account: one(accounts, {
-        fields: [transactions.accountId],
-        references: [accounts.id]
-    }),
-    categories: one(categories, {
-        fields: [transactions.categoryId],
-        references: [categories.id]
-    })
-}))
-
-export const insertTransactionSchema = createInsertSchema(transactions, {
-    date: z.coerce.date(),
-})
+    categoryId: integer("category_id").references(() => categories.id),
+    type: transactionTypeEnum("type").notNull(),
+    description: varchar("description", { length: 100 }),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at")
+      .notNull()
+      .$onUpdate(() => new Date()),
+  });
+  
+  export const categories = pgTable("categories", {
+    id: integer("id").primaryKey().references(() => users.id),
+    name: varchar("name").notNull(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at")
+      .notNull()
+      .$onUpdate(() => new Date()),
+  });
