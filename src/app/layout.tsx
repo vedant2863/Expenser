@@ -1,4 +1,3 @@
-
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
@@ -6,18 +5,17 @@ import { Inter } from "next/font/google";
 import Globalprovider from "@/components/Globalprovider";
 import Navbar from "@/components/Navbar";
 
-
 export const metadata: Metadata = {
   title: "Expensr",
   description: "Financial Management",
   icons: {
     icon: "/logo.png",
-}
+  },
 };
 const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-})
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
 
 export default function RootLayout({
   children,
@@ -35,11 +33,11 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Navbar/>
+            <Navbar />
             {children}
           </ThemeProvider>
         </body>
       </html>
     </Globalprovider>
-  )
+  );
 }

@@ -1,12 +1,16 @@
-import React from 'react'
-import Image from 'next/image'
+import Image from "next/image"
+import Link from "next/link"
 
 function Logo() {
   return (
-    <div className='flex items-center mx-4 px-2 '>
-      <Image className="w-auto hidden sm:block mx-2" src="/logo.png" alt="Logo" width={50} height={50} />
-      <p className='text-primary text-2xl font-bold'>Expensr</p>
+    <Link href="/">
+    <div className="items-center hidden lg:flex">
+        <Image src="/logo.svg" alt="Logo" height={28} width={28}/>
+        <p className="font-semibold text-white text-2xl ml-2.5">
+            Expensr
+        </p> 
     </div>
+</Link>
   )
 }
 
