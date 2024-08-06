@@ -197,5 +197,3 @@ export const accountRoutes = new Hono()
       return c.json({ data });
     }
   );
-
-

@@ -13,7 +13,7 @@ import {
   categories,
   accounts,
 } from "@/db/schema";
-const app = new Hono()
+export const transactionsRoutes = new Hono()
   .get(
     "/",
     zValidator(
@@ -328,5 +328,3 @@ const app = new Hono()
       return c.json({ data });
     }
   );
-
-export default app;

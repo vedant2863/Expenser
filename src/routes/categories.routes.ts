@@ -7,7 +7,7 @@ import { z } from "zod";
 import { db } from "@/db/db";
 
 import { categories, insertCategorySchema } from "@/db/schema";
-const app = new Hono()
+export const categoriesRoutes = new Hono()
   .get("/", clerkMiddleware(), async (c) => {
     const auth = getAuth(c);
 
@@ -177,28 +177,21 @@ const app = new Hono()
     async (c) => {
       const auth = getAuth(c);
       const { id } = c.req.valid("param");
-
       if (!id) {
         return c.json({ error: "Missing id" }, 400);
       }
-
       if (!auth?.userId) {
         return c.json({ error: "Unauthorized" }, 401);
       }
-
       const [data] = await db
         .delete(categories)
         .where(and(eq(categories.userId, auth.userId), eq(categories.id, id)))
         .returning({
           id: categories.id,
         });
-
       if (!data) {
         return c.json({ error: "Not found" }, 404);
       }
-
       return c.json({ data });
     }
   );
-
-export default app;

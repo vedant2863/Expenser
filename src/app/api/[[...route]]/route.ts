@@ -4,11 +4,15 @@ import { logger } from "hono/logger";
 
 import { accountRoutes } from "@/routes/accounts.route";
 import { transactionsRoutes } from "@/routes/transactions.routes";
-
+import { categoriesRoutes } from "@/routes/categories.routes";
 
 export const runtime = "edge";
 
-const app = new Hono().basePath("/api").route("/accounts", accountRoutes).route('/transactions', transactionsRoutes);
+const app = new Hono()
+  .basePath("/api")
+  .route("/accounts", accountRoutes)
+  .route("/transactions", transactionsRoutes)
+  .route("categories", categoriesRoutes);
 
 app.use("*", logger());
 
