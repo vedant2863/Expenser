@@ -6,20 +6,15 @@ import { accountRoutes } from "@/routes/accounts.route";
 
 export const runtime = "edge";
 
-const app = new Hono().basePath("/api");
+const app = new Hono().basePath("/api").route("/accounts", accountRoutes);
 
+app.use("*", logger());
 
-
-const routes = app
-  .route("/accounts", accountRoutes)
-
-  app.use("*", logger());
-
-app.get('/hello', (c) => {
+app.get("/", (c) => {
   return c.json({
-    message: 'Hello Next.js!',
-  })
-})
+    message: "Hello Next.js!",
+  });
+});
 
 app.notFound((c) => {
   return c.text("Custom 404 Message", 404);
@@ -35,5 +30,4 @@ export const POST = handle(app);
 export const PATCH = handle(app);
 export const DELETE = handle(app);
 
-
-export type AppType = typeof routes;
+export type AppType = typeof app;

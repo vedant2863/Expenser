@@ -3,10 +3,10 @@ import Link from "next/link";
 
 const Logo = () => {
   return (
-    <Link href="/">
+    <Link href="/" className="flex items-center mr-10">
       <div className="items-center hidden lg:flex">
-        <Image src="/logo.svg" alt="Logo" height={28} width={28} />
-        <p className="font-semibold text-white text-2xl ml-2.5">Expensr</p>
+        <Image src="/logo.png" alt="Logo" height={28} width={28} />
+        <p className="font-semibold text-black dark:text-white ml-2 text-xl">Expensr</p>
       </div>
     </Link>
   );

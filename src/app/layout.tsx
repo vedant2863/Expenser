@@ -4,7 +4,6 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import Globalprovider from "@/components/globalprovider";
 import { ThemeProvider } from "@/components/themeProvider";
-import Navbar from "@/components/Navbar";
 
 
 export const metadata: Metadata = {
@@ -35,7 +34,6 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Navbar/>
             {children}
           </ThemeProvider>
         </body>

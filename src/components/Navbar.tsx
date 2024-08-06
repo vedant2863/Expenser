@@ -20,6 +20,7 @@ const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const { isLoaded, session, isSignedIn } = useSession();
 
   // Function to close sidebar when clicking outside of it
   const handleClickOutside = (event: MouseEvent) => {
@@ -31,8 +32,6 @@ const Navbar: React.FC = () => {
     }
   };
 
-  const { isLoaded, session, isSignedIn } = useSession();
-
   useEffect(() => {
     // Add event listener on mount
     document.addEventListener("mousedown", handleClickOutside);
@@ -41,6 +40,41 @@ const Navbar: React.FC = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const renderLinks = () => {
+    return navbarLinks.map((item) => {
+      const isActive =
+        pathname === item.link || pathname.startsWith(`${item.link}/`);
+      return (
+        <Link
+          key={item.label}
+          href={item.link}
+          passHref
+          className={`px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out ${
+            isActive ? "bg-blue-500 text-white" : "text-black dark:text-white hover:bg-blue-300 hover:text-blue-900"
+          }`}
+        >
+          {item.label}
+        </Link>
+      );
+    });
+  };
+
+  const renderAuthButtons = () => (
+    <div className="flex items-center gap-x-4">
+      <SignedOut>
+        <Button>
+          <SignInButton />
+        </Button>
+        <Button>
+          <SignUpButton />
+        </Button>
+      </SignedOut>
+      <SignedIn>
+        <UserButton />
+      </SignedIn>
+    </div>
+  );
 
   return (
     <>
@@ -88,49 +122,17 @@ const Navbar: React.FC = () => {
                   </svg>
                 )}
               </button>
-              <Logo />
+              <div className="flex items-center space-x-4">
+                <Logo />
+              </div>
               <div className="hidden sm:block ml-4 space-x-8 mx-5">
-                {isSignedIn && (
-                  <div className="flex items-baseline">
-                    {navbarLinks.map((item) => {
-                      const isActive =
-                        pathname === item.link ||
-                        pathname.startsWith(`${item.link}/`);
-                      return (
-                        <Link
-                          key={item.label}
-                          href={item.link}
-                          passHref
-                          className={`px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out ${
-                            isActive
-                              ? "bg-blue-500 text-white"
-                              : "text-black dark:text-white hover:bg-blue-300 hover:text-blue-900"
-                          }`}
-                        >
-                          {item.label}
-                        </Link>
-                      );
-                    })}
-                  </div>
-                )}
+                {isSignedIn && <div className="flex items-baseline">{renderLinks()}</div>}
               </div>
             </div>
 
             <div className="flex items-center justify-between gap-x-4">
               <ModeToggle />
-              <div className="flex items-center gap-x-4">
-                <SignedOut>
-                  <Button >
-                    <SignInButton />
-                  </Button>
-                  <Button>
-                    <SignUpButton />
-                  </Button>
-                </SignedOut>
-                <SignedIn>
-                  <UserButton />
-                </SignedIn>
-              </div>
+              {renderAuthButtons()}
             </div>
           </div>
         </div>
@@ -152,7 +154,6 @@ const Navbar: React.FC = () => {
                 width={50}
                 height={50}
               />
-              {/* <Logo /> */}
               <button
                 type="button"
                 className="text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 p-2 rounded-md"
@@ -177,43 +178,14 @@ const Navbar: React.FC = () => {
             </div>
 
             <div className="mt-4 space-y-4">
-                {navbarLinks.map((item) => {
-                  const isActive =
-                    pathname === item.link ||
-                    pathname.startsWith(`${item.link}/`);
-                  return (
-                    <Link
-                      key={item.label}
-                      href={item.link}
-                      passHref
-                      className={`block px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out ${
-                        isActive
-                          ? "bg-blue-500 text-white"
-                          : "text-black dark:text-white hover:bg-blue-100 hover:text-blue-500"
-                      }`}
-                    >
-                      {item.label}
-                    </Link>
-                  );
-                })}
-              <div className="flex items-center gap-x-4">
-                <SignedOut>
-                  <Button >
-                    <SignInButton />
-                  </Button>
-                  <Button>
-                    <SignUpButton />
-                  </Button>
-                </SignedOut>
-                <SignedIn>
-                  <UserButton />
-                </SignedIn>
-              </div>
+              {renderLinks()}
+              {renderAuthButtons()}
             </div>
           </div>
         </div>
       </nav>
-</> 
-)}
-                   
+    </>
+  );
+};
+
 export default Navbar;
