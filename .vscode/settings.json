@@ -9,6 +9,7 @@
         "neondatabase",
         "nextjs",
         "paralleldrive",
-        "tanstack"
+        "tanstack",
+        "tranasactions"
     ]
 }

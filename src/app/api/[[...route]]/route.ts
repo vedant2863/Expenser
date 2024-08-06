@@ -3,10 +3,12 @@ import { handle } from "hono/vercel";
 import { logger } from "hono/logger";
 
 import { accountRoutes } from "@/routes/accounts.route";
+import { transactionsRoutes } from "@/routes/transactions.routes";
+
 
 export const runtime = "edge";
 
-const app = new Hono().basePath("/api").route("/accounts", accountRoutes);
+const app = new Hono().basePath("/api").route("/accounts", accountRoutes).route('/transactions', transactionsRoutes);
 
 app.use("*", logger());
 
