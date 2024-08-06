@@ -1,12 +1,33 @@
 {
-  "version": "7",
-  "dialect": "postgresql",
+  "version": "5",
+  "dialect": "pg",
   "entries": [
     {
       "idx": 0,
-      "version": "7",
-      "when": 1722947469043,
-      "tag": "0000_sudden_medusa",
+      "version": "5",
+      "when": 1719432714722,
+      "tag": "0000_plain_omega_red",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1719433378562,
+      "tag": "0001_nappy_sasquatch",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1721163702748,
+      "tag": "0002_broad_dust",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1721167919074,
+      "tag": "0003_opposite_flatman",
       "breakpoints": true
     }
   ]

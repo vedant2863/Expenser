@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Finance Platform
 
-## Getting Started
+Welcome to my Finance Platform project! This platform is designed to help you manage your personal or business finances effectively. With this Finance SaaS Platform, you can track your income and expenses, categorize transactions, assign them to specific accounts, and import transactions using a CSV file. Additionally, it integrates with Plaid to connect to your bank account and uses Lemon Squeezy for monetization.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Track Income and Expenses:** Monitor your financial transactions with ease.
+- **Categorize Transactions:** Organize your transactions by categories for better clarity.
+- **Account Management:** Assign transactions to specific accounts.
+- **CSV Import:** Import transactions from CSV files for quick data entry.
+- **Bank Integration:** Connect to your bank account using Plaid.
+- **Monetization:** Monetize your platform using Lemon Squeezy.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Frontend:** Next.js, React
+- **Backend:** Hono.js
+- **CSV Upload:** Integrated CSV upload functionality
+- **Database:** PostgreSQL
+- **Bank Integration:** Plaid
+- **Payment Processing:** Lemon Squeezy
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Installation
 
-## Learn More
+1. **Clone the repository:**
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   git clone https://github.com/thounny/finance-tracker.git
+   cd finance-platform
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Install dependencies:**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   ```bash
+   # For backend
+   cd backend
+   npm install
 
-## Deploy on Vercel
+   # For frontend
+   cd ../frontend
+   npm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. **Set up environment variables:**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+   Create a `.env` file in the root directory and add the following:
+
+   ```env
+   PLAID_CLIENT_ID=your_plaid_client_id
+   PLAID_SECRET=your_plaid_secret
+   LEMON_SQUEEZY_API_KEY=your_lemon_squeezy_api_key
+   DATABASE_URL=your_postgresql_database_url
+   ```
+
+4. **Run the application:**
+
+   ```bash
+   # For backend
+   cd backend
+   npm start
+
+   # For frontend
+   cd ../frontend
+   npm start
+   ```
+
+## Usage
+
+1. **Track Income and Expenses:**
+
+   - Add your income and expense transactions manually or import them from a CSV file.
+
+2. **Categorize Transactions:**
+
+   - Assign categories to your transactions for better organization.
+
+3. **Account Management:**
+
+   - Create and manage different accounts, assigning transactions to the appropriate accounts.
+
+4. **CSV Import:**
+
+   - Import transactions using a CSV file by navigating to the import section and uploading your file.
+
+5. **Bank Integration:**
+
+   - Connect your bank account using Plaid to automatically import and sync transactions.
+
+6. **Monetization:**
+   - Monetize your platform by integrating Lemon Squeezy for payment processing.
